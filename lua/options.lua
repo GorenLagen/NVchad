@@ -99,6 +99,8 @@ vim.api.nvim_set_keymap("n", "<Leader>du", ":lua require'dapui'.toggle()<CR>", {
 
 vim.lsp.set_log_level "debug"
 
+vim.keymap.set("v", "K", "<nop>", { noremap = true, silent = true })
+
 --g.im_select_command = "C:\\Windows\\System32\\im-select"
 -- g.im_select_default = "1033"
 
