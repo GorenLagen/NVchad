@@ -1,57 +1,44 @@
 require "nvchad.options"
 
 local enable_providers = {
-  "python3_provider",
-  "node_provider",
-  -- and so on
+    "python3_provider",
+    "node_provider",
+    -- and so on
 }
 
 for _, plugin in pairs(enable_providers) do
-  vim.g["loaded_" .. plugin] = nil
-  vim.cmd("runtime " .. plugin)
+    vim.g["loaded_" .. plugin] = nil
+    vim.cmd("runtime " .. plugin)
 end
 
 require("nvim-treesitter.configs").setup {
-  ensure_installed = { "lua", "python", "latex", "markdown" }, -- Добавьте нужные языки
+    ensure_installed = { "lua", "python", "latex", "markdown" }, -- Добавьте нужные языки
 }
 
-require("telescope").setup {
-  extensions = {
-    fzf = {
-      fuzzy = true, -- false will only do exact matching
-      override_generic_sorter = true, -- override the generic sorter
-      override_file_sorter = true, -- override the file sorter
-      -- the default case_mode is "smart_case"
-    },
-  },
-}
--- To get fzf loaded and working with telescope, you need to call
--- load_extension, somewhere after setup function:
-require("telescope").load_extension "fzf"
+
+vim.keymap.set('n', 'q:', '<Nop>')
+require("todo-comments").setup()
 
 -- Импортируем dap
-local dap = require "dap"
-
-dap.adapters.python = {
-  type = "executable",
-  command = "python",
-  args = { "-m", "debugpy.adapter" },
-}
--- Настройка конфигурации для Python
-dap.configurations.python = {
-  {
-    type = "python",
-    request = "launch",
-    name = "Launch Program",
-    program = "${file}",
-  },
-}
-
--- Дополнительная настройка для nvim-dap-ui (если используете)
-require("dapui").setup()
-
--- Дополнительная настройка виртуальных текстов (если используете)
-require("nvim-dap-virtual-text").setup()
+-- local dap = require "dap"
+--
+-- dap.adapters.python = {
+--     type = "executable",
+--     command = "python",
+--     args = { "-m", "debugpy.adapter" },
+-- }
+-- -- Настройка конфигурации для Python
+-- dap.configurations.python = {
+--     {
+--         type = "python",
+--         request = "launch",
+--         name = "Launch Program",
+--         program = "${file}",
+--     },
+-- }
+--
+-- require("dapui").setup()
+-- require("nvim-dap-virtual-text").setup()
 
 -- require("lspconfig").pyright.setup {
 --   cmd = {
@@ -59,6 +46,12 @@ require("nvim-dap-virtual-text").setup()
 --     "--stdio",
 --   },
 -- }
+
+vim.api.nvim_create_user_command('LEET', function()
+    vim.cmd('bufdo bd') -- Закрытие всех буферов
+    vim.cmd('Leet')     -- Ваша дополнительная команда Leet
+end, {})
+
 -- add yours here!
 
 local o = vim.o
@@ -71,7 +64,7 @@ o.tabstop = 4
 o.softtabstop = 4
 o.relativenumber = true
 
-g.python3_host_prog = vim.fn.expand "~/.virtualenvs/MLops/bin/python3"
+g.python3_host_prog = vim.fn.expand "~/.venv/ML/bin/python3"
 
 -- Точки останова
 vim.api.nvim_set_keymap("n", "<F9>", ":lua require'dap'.toggle_breakpoint()<CR>", { noremap = true, silent = true })
