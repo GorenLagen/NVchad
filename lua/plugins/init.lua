@@ -13,6 +13,27 @@ return {
             require "configs.lspconfig"
         end,
     },
+    {
+        "brenton-leighton/multiple-cursors.nvim",
+        opts = {}, -- This causes the plugin setup function to be called
+        keys = {
+            { "<C-j>",         "<Cmd>MultipleCursorsAddDown<CR>",          mode = { "n", 'i', "x" }, desc = "Add cursor and move down" },
+            { "<C-k>",         "<Cmd>MultipleCursorsAddUp<CR>",            mode = { "n", 'i', "x" }, desc = "Add cursor and move up" },
+
+            { "<C-Up>",        "<Cmd>MultipleCursorsAddUp<CR>",            mode = { "n", "i", "x" }, desc = "Add cursor and move up" },
+            { "<C-Down>",      "<Cmd>MultipleCursorsAddDown<CR>",          mode = { "n", "i", "x" }, desc = "Add cursor and move down" },
+
+            { "<C-LeftMouse>", "<Cmd>MultipleCursorsMouseAddDelete<CR>",   mode = { "n", "i" },      desc = "Add or remove cursor" },
+
+            { "<Leader>a",     "<Cmd>MultipleCursorsAddMatches<CR>",       mode = { "n", "x" },      desc = "Add cursors to cword" },
+            { "<Leader>A",     "<Cmd>MultipleCursorsAddMatchesV<CR>",      mode = { "n", "x" },      desc = "Add cursors to cword in previous area" },
+
+            { "<Leader>d",     "<Cmd>MultipleCursorsAddJumpNextMatch<CR>", mode = { "n", "x" },      desc = "Add cursor and jump to next cword" },
+            { "<Leader>D",     "<Cmd>MultipleCursorsJumpNextMatch<CR>",    mode = { "n", "x" },      desc = "Jump to next cword" },
+
+            { "<Leader>l",     "<Cmd>MultipleCursorsLock<CR>",             mode = { "n", "x" },      desc = "Lock virtual cursors" },
+        },
+    },
 
     {
 
@@ -87,7 +108,8 @@ return {
 
     {
         "mfussenegger/nvim-dap",
-        ft = { 'python' },
+        keys = { { "<F9>" }, { "<F5>" } },
+        -- ft = { 'python' },
         config = function()
             require "configs.dap"
         end,
@@ -100,7 +122,7 @@ return {
         end,
     },
 
-    { "mfussenegger/nvim-dap-python",    dependencies = "mfussenegger/nvim-dap" },
+    { "mfussenegger/nvim-dap-python",    keys = { { '<F9>' }, { '<F5>' } },     dependencies = "mfussenegger/nvim-dap" },
     { "theHamsta/nvim-dap-virtual-text", dependencies = "mfussenegger/nvim-dap" },
     { "nvim-neotest/nvim-nio",           dependencies = "mfussenegger/nvim-dap" },
     --
@@ -125,6 +147,7 @@ return {
         config = function()
             require("notify").setup {
                 background_colour = "#1e1e1e", -- Цвет фона уведомлений
+                fps = 30,
                 timeout = 3000,                -- Время показа уведомлений (5 секунд)
                 icons = {
                     DEBUG = "",
@@ -133,10 +156,13 @@ return {
                     TRACE = "✎",
                     WARN = "",
                 },
-                level = 2,                    -- Минимальный уровень для отображения сообщений
+                level = 2, -- Минимальный уровень для отображения сообщений
+                render = "compact",
                 minimum_width = 50,
+                max_width = 30,
+                max_height = 4,
                 stages = "fade_in_slide_out", -- Анимация уведомлений
-                top_down = true,
+                top_down = false,
             }
         end,
         dependencies = {

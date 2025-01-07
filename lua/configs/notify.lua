@@ -1,41 +1,85 @@
-local banned_messages = {
-  "No signature help available", -- Пример заблокированного сообщения
-  "Notify", -- Еще одно сообщение для фильтрации
-}
+-- Utility functions shared between progress reports for LSP and DAP
 
-local function on_open()
-  -- Если существует последний ID уведомления, то закрываем его
-  if vim.g.last_notification_id then
-    require("notify").dismiss(vim.g.last_notification_id)
-  end
+vim.notify = require("notify")
+
+local client_notifs = {}
+
+local function get_notif_data(client_id, token)
+    if not client_notifs[client_id] then
+        client_notifs[client_id] = {}
+    end
+
+    if not client_notifs[client_id][token] then
+        client_notifs[client_id][token] = {}
+    end
+
+    return client_notifs[client_id][token]
 end
 
-local M = {
-  "rcarriga/nvim-notify", -- Подключаем плагин nvim-notify
-  priority = 99999, -- Высокий приоритет для плагина
-  config = function()
-    -- Настройка плагина nvim-notify
-    require("notify").setup {
-      max_width = 90, -- Максимальная ширина уведомлений
-      background_colour = "#1e1e1e", -- Цвет фона уведомлений
-      timeout = 3500, -- Время отображения уведомлений
-      top_down = false, -- Уведомления снизу
-      stages = "fade_in_slide_out", -- Эффект появления уведомлений
-      on_open = on_open, -- Действия при открытии уведомления
-    }
 
-    -- Переопределяем vim.notify для фильтрации сообщений
-    vim.notify = function(msg, ...)
-      -- Проверяем каждое сообщение на наличие запрещенных фраз
-      for _, banned_msg in ipairs(banned_messages) do
-        if string.find(msg, banned_msg) then
-          return -- Если сообщение заблокировано, не показываем его
-        end
-      end
-      -- Если сообщение не заблокировано, передаем его в nvim-notify
-      require "notify"(msg, ...)
+local spinner_frames = { "⣾", "⣽", "⣻", "⢿", "⡿", "⣟", "⣯", "⣷" }
+
+local function update_spinner(client_id, token)
+    local notif_data = get_notif_data(client_id, token)
+
+    if notif_data.spinner then
+        local new_spinner = (notif_data.spinner + 1) % #spinner_frames
+        notif_data.spinner = new_spinner
+
+        notif_data.notification = vim.notify(nil, nil, {
+            hide_from_history = true,
+            icon = spinner_frames[new_spinner],
+            replace = notif_data.notification,
+        })
+
+        vim.defer_fn(function()
+            update_spinner(client_id, token)
+        end, 100)
     end
-  end,
-}
+end
 
-return M
+local function format_title(title, client_name)
+    return client_name .. (#title > 0 and ": " .. title or "")
+end
+
+local function format_message(message, percentage)
+    return (percentage and percentage .. "%\t" or "") .. (message or "")
+end
+
+-- DAP integration
+-- Make sure to also have the snippet with the common helper functions in your config!
+
+local dap = require "dap"
+
+dap.listeners.before['event_progressStart']['progress-notifications'] = function(session, body)
+    local notif_data = get_notif_data("dap", body.progressId)
+
+    local message = format_message(body.message, body.percentage)
+    notif_data.notification = vim.notify(message, "info", {
+        title = format_title(body.title, session.config.type),
+        icon = spinner_frames[1],
+        timeout = false,
+        hide_from_history = false,
+    })
+
+    notif_data.notification.spinner = 1,
+        update_spinner("dap", body.progressId)
+end
+
+dap.listeners.before['event_progressUpdate']['progress-notifications'] = function(session, body)
+    local notif_data = get_notif_data("dap", body.progressId)
+    notif_data.notification = vim.notify(format_message(body.message, body.percentage), "info", {
+        replace = notif_data.notification,
+        hide_from_history = false,
+    })
+end
+
+dap.listeners.before['event_progressEnd']['progress-notifications'] = function(session, body)
+    local notif_data = client_notifs["dap"][body.progressId]
+    notif_data.notification = vim.notify(body.message and format_message(body.message) or "Complete", "info", {
+        icon = "",
+        replace = notif_data.notification,
+        timeout = 2000
+    })
+    notif_data.spinner = nil
+end
