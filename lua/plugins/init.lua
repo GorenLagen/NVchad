@@ -108,8 +108,8 @@ return {
 
     {
         "mfussenegger/nvim-dap",
-        keys = { { "<F9>" }, { "<F5>" } },
-        -- ft = { 'python' },
+        -- keys = { { "<F9>" }, { "<F5>" } },
+        ft = { 'python' },
         config = function()
             require "configs.dap"
         end,
@@ -117,12 +117,12 @@ return {
     {
         "rcarriga/nvim-dap-ui",
         dependencies = "mfussenegger/nvim-dap",
-        config = function()
-            require "configs.dapui"
-        end,
+        -- config = function()
+        --     require "configs.dapui"
+        -- end,
     },
 
-    { "mfussenegger/nvim-dap-python",    keys = { { '<F9>' }, { '<F5>' } },     dependencies = "mfussenegger/nvim-dap" },
+    { "mfussenegger/nvim-dap-python",    dependencies = "mfussenegger/nvim-dap" },
     { "theHamsta/nvim-dap-virtual-text", dependencies = "mfussenegger/nvim-dap" },
     { "nvim-neotest/nvim-nio",           dependencies = "mfussenegger/nvim-dap" },
     --
@@ -167,12 +167,11 @@ return {
         end,
         dependencies = {
             "MunifTanjim/nui.nvim", -- Обязательная зависимость для работы nvim-notify
-            "rcarriga/nvim-notify", -- Плагин для уведомлений
         },
     },
     {
         "folke/noice.nvim",
-        event = "BufRead",
+        keys = { ':' },
         dependencies = {
             "MunifTanjim/nui.nvim",
             "rcarriga/nvim-notify",
@@ -206,13 +205,61 @@ return {
     --         require "configs.langmapper"
     --     end,
     -- },
+    {
+        'GCBallesteros/jupytext.nvim',
+        lazy = false,
+        config = function()
+            require("jupytext").setup({
+                style = "markdown",
+                output_extension = "md",
+                force_ft = "markdown",
+            })
+        end
+    },
     --
-    -- {
-    --   "3rd/image.nvim",
-    --   config = function()
-    --     require "config.image"
-    --   end,
-    -- },
+    {
+        "3rd/image.nvim",
+        -- ft = { { 'markdown' }, { 'python' } },
+        config = function()
+            require("image").setup({
+                backend = "ueberzug",
+                processor = "magick_rock", -- or "magick_cli"
+                integrations = {
+                    markdown = {
+                        enabled = true,
+                        clear_in_insert_mode = false,
+                        download_remote_images = true,
+                        only_render_image_at_cursor = false,
+                        floating_windows = false,              -- if true, images will be rendered in floating markdown windows
+                        filetypes = { "markdown", "vimwiki" }, -- markdown extensions (ie. quarto) can go here
+                    },
+                    neorg = {
+                        enabled = true,
+                        filetypes = { "norg" },
+                    },
+                    typst = {
+                        enabled = true,
+                        filetypes = { "typst" },
+                    },
+                    html = {
+                        enabled = false,
+                    },
+                    css = {
+                        enabled = false,
+                    },
+                },
+                max_width = nil,
+                max_height = nil,
+                max_width_window_percentage = nil,
+                max_height_window_percentage = 50,
+                window_overlap_clear_enabled = false,                                               -- toggles images when windows are overlapped
+                window_overlap_clear_ft_ignore = { "cmp_menu", "cmp_docs", "snacks_notif", "scrollview", "scrollview_sign" },
+                editor_only_render_when_focused = false,                                            -- auto show/hide images when the editor gains/looses focus
+                tmux_show_only_in_active_window = false,                                            -- auto show/hide images in the correct Tmux window (needs visual-activity off)
+                hijack_file_patterns = { "*.png", "*.jpg", "*.jpeg", "*.gif", "*.webp", "*.avif" }, -- render image files as images when opened
+            })
+        end,
+    },
     {
         "lervag/vimtex",
         ft = { "tex", "latex" }, -- we don't want to lazy load VimTeX
@@ -224,15 +271,16 @@ return {
             vim.g.vimtex_view_method = "zathura"
         end,
     },
-    -- {
-    --   "benlubas/molten-nvim",
-    --   lazy = false,
-    --   version = "^1.0.0", -- use version <2.0.0 to avoid breaking changes
-    --   build = ":UpdateRemotePlugins",
-    --   config = function()
-    --     require "configs.molten"
-    --   end,
-    -- },
+
+    {
+        "benlubas/molten-nvim",
+        keys = { { '<Leader>mi' }, },
+        version = "^1.0.0", -- use version <2.0.0 to avoid breaking changes
+        build = ":UpdateRemotePlugins",
+        config = function()
+            require "configs.molten"
+        end,
+    },
     -- {
     --     "quarto-dev/quarto-nvim",
     --     dependencies = {
