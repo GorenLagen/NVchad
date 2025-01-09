@@ -13,6 +13,7 @@ return {
             require "configs.lspconfig"
         end,
     },
+    { 'jbyuki/nabla.nvim',               ft = { 'tex', 'markdown' } },
     {
         "brenton-leighton/multiple-cursors.nvim",
         opts = {}, -- This causes the plugin setup function to be called
@@ -141,40 +142,40 @@ return {
             require "configs.leap"
         end,
     },
-    {
-        "rcarriga/nvim-notify",
-        event = "BufRead",
-        config = function()
-            require("notify").setup {
-                background_colour = "#1e1e1e", -- Цвет фона уведомлений
-                fps = 30,
-                timeout = 3000,                -- Время показа уведомлений (5 секунд)
-                icons = {
-                    DEBUG = "",
-                    ERROR = "",
-                    INFO = "",
-                    TRACE = "✎",
-                    WARN = "",
-                },
-                level = 2, -- Минимальный уровень для отображения сообщений
-                render = "compact",
-                minimum_width = 50,
-                max_width = 30,
-                max_height = 4,
-                stages = "fade_in_slide_out", -- Анимация уведомлений
-                top_down = false,
-            }
-        end,
-        dependencies = {
-            "MunifTanjim/nui.nvim", -- Обязательная зависимость для работы nvim-notify
-        },
-    },
+    -- {
+    --     "rcarriga/nvim-notify",
+    --     event = "BufRead",
+    --     config = function()
+    --         require("notify").setup {
+    --             background_colour = "#1e1e1e", -- Цвет фона уведомлений
+    --             fps = 30,
+    --             timeout = 3000,                -- Время показа уведомлений (5 секунд)
+    --             icons = {
+    --                 DEBUG = "",
+    --                 ERROR = "",
+    --                 INFO = "",
+    --                 TRACE = "✎",
+    --                 WARN = "",
+    --             },
+    --             level = 2, -- Минимальный уровень для отображения сообщений
+    --             render = "compact",
+    --             max_wihth = 30,
+    --             max_height = 4,
+    --             stages = "fade_in_slide_out", -- Анимация уведомлений
+    --             top_down = false,
+    --         }
+    --     end,
+    --     dependencies = {
+    --         "MunifTanjim/nui.nvim", -- Обязательная зависимость для работы nvim-notify
+    --         'nvim-telescope/telescope.nvim',
+    --     },
+    -- },
     {
         "folke/noice.nvim",
-        keys = { ':' },
+        lazy = false,
         dependencies = {
             "MunifTanjim/nui.nvim",
-            "rcarriga/nvim-notify",
+            -- "rcarriga/nvim-notify",
         },
         config = function()
             require "configs.noice"
@@ -281,25 +282,61 @@ return {
             require "configs.molten"
         end,
     },
-    -- {
-    --     "quarto-dev/quarto-nvim",
-    --     dependencies = {
-    --         "jmbuhr/otter.nvim",
-    --         "Vigemus/iron.nvim",
-    --         "nvim-treesitter/nvim-treesitter",
-    --     },
+    -- { -- requires plugins in lua/plugins/treesitter.lua and lua/plugins/lsp.lua
+    --     -- for complete functionality (language features)
+    --     'quarto-dev/quarto-nvim',
+    --     ft = { 'quarto', 'markdown' },
+    --     dev = false,
     --     config = function()
     --         require "configs.quarto"
     --     end,
+    --     dependencies = {
+    --         -- for language features in code cells
+    --         -- configured in lua/plugins/lsp.lua and
+    --         -- added as a nvim-cmp source in lua/plugins/completion.lua
+    --         'jmbuhr/otter.nvim',
+    --     },
     -- },
-    --
     -- {
-    --   "Vigemus/iron.nvim",
-    --   lazy = false,
-    --   config = function()
-    --     require "configs.iron"
-    --   end,
+    --
+    --     -- for lsp features in code cells / embedded code
+    --     'jmbuhr/otter.nvim',
+    --     ft = { 'markdown' },
+    --     dev = false,
+    --     dependencies = {
+    --         {
+    --             'neovim/nvim-lspconfig',
+    --             'nvim-treesitter/nvim-treesitter',
+    --         },
+    --         config = function()
+    --             require "configs.otter"
+    --         end,
+    --     },
     -- },
-    --
-    --
+    {
+        "benlubas/neoscroll.nvim", -- fork that adds the time_scale option to scroll faster
+        event = "BufRead",
+        -- dev = true,
+        opts = {
+            mappings = { "<C-u>", "<C-d>" },
+            stop_eof = false,
+            time_scale = 0.3,
+            pre_hook = function()
+                ---@diagnostic disable-next-line: param-type-mismatch
+                vim.opt.eventignore:append({
+                    "WinScrolled",
+                    "CursorMoved",
+                })
+            end,
+            post_hook = function()
+                ---@diagnostic disable-next-line: param-type-mismatch
+                vim.opt.eventignore:remove({
+                    "WinScrolled",
+                    "CursorMoved",
+                })
+                vim.cmd.doautocmd("WinScrolled")
+                vim.cmd.doautocmd("CursorMoved")
+            end,
+        },
+    },
 }
