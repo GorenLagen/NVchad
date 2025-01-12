@@ -13,7 +13,25 @@ return {
             require "configs.lspconfig"
         end,
     },
-    { 'jbyuki/nabla.nvim',               ft = { 'tex', 'markdown' } },
+
+
+
+    {
+        "nvimtools/hydra.nvim",
+        keys = { { '<Leader>oa' } },
+        config = function()
+            require "configs.hydra"
+        end,
+
+        dependencies = {
+            "quarto-dev/quarto-nvim",
+            "nvim-treesitter/nvim-treesitter-textobjects",
+        }
+    },
+
+
+
+
     {
         "brenton-leighton/multiple-cursors.nvim",
         opts = {}, -- This causes the plugin setup function to be called
@@ -128,15 +146,7 @@ return {
     { "mfussenegger/nvim-dap-python",    dependencies = "mfussenegger/nvim-dap" },
     { "theHamsta/nvim-dap-virtual-text", dependencies = "mfussenegger/nvim-dap" },
     { "nvim-neotest/nvim-nio",           dependencies = "mfussenegger/nvim-dap" },
-    --
-    -- {
-    --   "NeogitOrg/neogit",
-    --   event = "BufRead",
-    --   config = function()
-    --     require "configs.neogit"
-    --   end,
-    -- },
-    --
+
     {
         "ggandor/leap.nvim",
         keys = { { 's' }, { 'S' } },
@@ -205,7 +215,7 @@ return {
         -- TODO: Русифицировать телескоп\команды для latex
 
         "Wansmer/langmapper.nvim",
-        fr = { { 'tex' } },
+        ft = { 'tex' },
         config = function()
             require "configs/langmapper"
         end,
@@ -293,6 +303,15 @@ return {
         }
     },
 
+
+    {
+        "nvim-treesitter/nvim-treesitter-textobjects",
+        config = function()
+            require "configs.textobj"
+        end,
+        dependencies = { "nvim-treesitter/nvim-treesitter" },
+    },
+
     {
         'jmbuhr/otter.nvim',
         keys = { '<Leader>oa' },
@@ -346,30 +365,15 @@ return {
         },
     },
 
-    {
-        "benlubas/neoscroll.nvim", -- fork that adds the time_scale option to scroll faster
-        event = "BufRead",
-        -- dev = true,
-        opts = {
-            mappings = { "<C-u>", "<C-d>" },
-            stop_eof = false,
-            time_scale = 0.3,
-            pre_hook = function()
-                ---@diagnostic disable-next-line: param-type-mismatch
-                vim.opt.eventignore:append({
-                    "WinScrolled",
-                    "CursorMoved",
-                })
-            end,
-            post_hook = function()
-                ---@diagnostic disable-next-line: param-type-mismatch
-                vim.opt.eventignore:remove({
-                    "WinScrolled",
-                    "CursorMoved",
-                })
-                vim.cmd.doautocmd("WinScrolled")
-                vim.cmd.doautocmd("CursorMoved")
-            end,
-        },
-    },
+    -- {
+    --     "benlubas/neoscroll.nvim", -- fork that adds the time_scale option to scroll faster
+    --     keys = {
+    --         { '<C-u>' }, { '<C-d>' }, { '<C-b>' }, { '<C-f>' },
+    --         { '<C-y>' }, { '<C-e>' },
+    --         { 'zt' }, { 'zz' }, { 'zb' },
+    --     },
+    --     config = function()
+    --         require 'configs.neoscroll'
+    --     end,
+    -- },
 }
