@@ -38,6 +38,8 @@ return {
 
     {
 
+        -- TODO: сделат ьинд для посика tood с телескопа
+
         "folke/todo-comments.nvim",
         event = 'BufRead',
         dependencies = { "nvim-lua/plenary.nvim" },
@@ -137,7 +139,7 @@ return {
     --
     {
         "ggandor/leap.nvim",
-        event = "BufRead",
+        keys = { { 's' }, { 'S' } },
         config = function()
             require "configs.leap"
         end,
@@ -199,13 +201,16 @@ return {
     --
     { "MunifTanjim/nui.nvim" },
     --
-    -- {
-    --     "Wansmer/langmapper.nvim",
-    --     event = 'BufRead ',
-    --     config = function()
-    --         require "configs.langmapper"
-    --     end,
-    -- },
+    {
+        -- TODO: Русифицировать телескоп\команды для latex
+
+        "Wansmer/langmapper.nvim",
+        fr = { { 'tex' } },
+        config = function()
+            require "configs/langmapper"
+        end,
+    },
+
     {
         'GCBallesteros/jupytext.nvim',
         lazy = false,
@@ -220,7 +225,9 @@ return {
     --
     {
         "3rd/image.nvim",
-        -- ft = { { 'markdown' }, { 'python' } },
+        -- ft = { { 'markdown' }, },
+        -- lazy = false,
+        keys = { { '<Leader>oa' }, },
         config = function()
             require("image").setup({
                 backend = "ueberzug",
@@ -249,10 +256,10 @@ return {
                         enabled = false,
                     },
                 },
-                max_width = nil,
-                max_height = nil,
-                max_width_window_percentage = nil,
-                max_height_window_percentage = 50,
+                max_width = 50,
+                max_height = 50,
+                max_height_window_percentage = math.huge,
+                max_width_window_percentage = math.huge,
                 window_overlap_clear_enabled = false,                                               -- toggles images when windows are overlapped
                 window_overlap_clear_ft_ignore = { "cmp_menu", "cmp_docs", "snacks_notif", "scrollview", "scrollview_sign" },
                 editor_only_render_when_focused = false,                                            -- auto show/hide images when the editor gains/looses focus
@@ -275,44 +282,70 @@ return {
 
     {
         "benlubas/molten-nvim",
-        keys = { { '<Leader>mi' }, },
+        keys = { { '<Leader>oa' }, },
         version = "^1.0.0", -- use version <2.0.0 to avoid breaking changes
         build = ":UpdateRemotePlugins",
         config = function()
             require "configs.molten"
         end,
+        dependencies = {
+            "3rd/image.nvim",
+        }
     },
-    -- { -- requires plugins in lua/plugins/treesitter.lua and lua/plugins/lsp.lua
-    --     -- for complete functionality (language features)
-    --     'quarto-dev/quarto-nvim',
-    --     ft = { 'quarto', 'markdown' },
-    --     dev = false,
-    --     config = function()
-    --         require "configs.quarto"
-    --     end,
-    --     dependencies = {
-    --         -- for language features in code cells
-    --         -- configured in lua/plugins/lsp.lua and
-    --         -- added as a nvim-cmp source in lua/plugins/completion.lua
-    --         'jmbuhr/otter.nvim',
-    --     },
-    -- },
-    -- {
-    --
-    --     -- for lsp features in code cells / embedded code
-    --     'jmbuhr/otter.nvim',
-    --     ft = { 'markdown' },
-    --     dev = false,
-    --     dependencies = {
-    --         {
-    --             'neovim/nvim-lspconfig',
-    --             'nvim-treesitter/nvim-treesitter',
-    --         },
-    --         config = function()
-    --             require "configs.otter"
-    --         end,
-    --     },
-    -- },
+
+    {
+        'jmbuhr/otter.nvim',
+        keys = { '<Leader>oa' },
+        -- lazy = false, -- либо замените на ft = { 'markdown', 'quarto' } для ленивой загрузки
+        dependencies = {
+            'nvim-treesitter/nvim-treesitter',
+            'hrsh7th/nvim-cmp', -- не обязателен, если не используете автодополнение
+        },
+        config = function()
+            local otter = require 'otter'
+            otter.setup {
+                lsp = {
+                    hover = {
+                        border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
+                    },
+                    diagnostic_update_events = { "BufWritePost" }, -- обновление диагностики
+                },
+                buffers = {
+                    set_filetype = true,   -- установить filetype для otter-буферов
+                    write_to_disk = false, -- не сохранять временные файлы на диск
+                },
+                strip_wrapping_quote_characters = { "'", '"', "`" },
+                handle_leading_whitespace = false,
+
+            }
+
+
+            vim.keymap.set('n', '<leader>oa', function()
+                require('otter').activate({ 'python', 'lua' }, true, true)
+                print("Otter activated!")
+
+                -- vim.cmd(":MoltenInit")
+                -- print("Molten initialized!")
+
+                vim.cmd("MoltenImportOutput")
+                print('Molten output!')
+            end, { noremap = true, silent = true, desc = "Activate Otter and Molten and import outputs" })
+        end,
+    },
+
+    {
+        "quarto-dev/quarto-nvim",
+        keys = { '<Leader>oa' },
+        config = function()
+            require 'configs.quarto'
+        end,
+
+        dependencies = {
+            "jmbuhr/otter.nvim",
+            "nvim-treesitter/nvim-treesitter",
+        },
+    },
+
     {
         "benlubas/neoscroll.nvim", -- fork that adds the time_scale option to scroll faster
         event = "BufRead",

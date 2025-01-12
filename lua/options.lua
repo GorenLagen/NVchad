@@ -26,7 +26,7 @@ require("todo-comments").setup()
 local o = vim.o
 local g = vim.g
 
-g.python3_host_prog = vim.fn.expand "~/.venv/ML/bin/python3"
+g.python3_host_prog = vim.fn.expand "~/.venv/DS/bin/python3"
 
 
 o.shiftwidth = 4

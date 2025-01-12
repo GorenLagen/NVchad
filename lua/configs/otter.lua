@@ -8,3 +8,10 @@ vim.api.nvim_set_keymap('n', '<leader>qp', ':lua require"quarto".quartoPreview()
 vim.api.nvim_set_keymap('n', '<leader>qq', ':lua require"quarto".quartoClosePreview()<cr>',
     { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<leader>qra', ':QuartoSendAll<cr>', { noremap = true, silent = true })
+
+vim.api.nvim_create_autocmd('FileType', {
+    pattern = { 'markdown', 'quarto' },
+    callback = function()
+        require('otter').activate({ 'python', 'lua' }, true, true)
+    end,
+})
