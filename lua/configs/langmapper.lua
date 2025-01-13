@@ -28,3 +28,5 @@ end
 
 vim.keymap.set({ 'n', 'x', 'o' }, 'ы', '<Plug>(leap-forward)')
 vim.keymap.set({ 'n', 'x', 'o' }, 'Ы', '<Plug>(leap-backward)')
+
+-- local map = require('langmapper').map

@@ -1,17 +1,20 @@
 -- TODO:
 -- 1. Я гандончик и нужно всегда делать бекапы!!!
--- 2. Решить проблему с дублиноверинем output ячеек
 
 
 vim.g.molten_wrap_output = true
 vim.g.molten_image_provider = "image.nvim"
+vim.g.molten_auto_open_output = false
 vim.g.molten_virt_lines_off_by_1 = true
 vim.g.molten_virt_text_output = true
 vim.g.molten_use_border_highlights = false
 vim.g.molten_output_show_more = true
 -- vim.g.molten_output_win_style = 'minimal'
-vim.g.molten_image_location = 'float'
+vim.g.molten_image_location = 'virt'
 -- vim.g.molten_auto_open_output = 'false'
+
+vim.keymap.set("n", "<leader>os", ":noautocmd MoltenEnterOutput<CR> :noautocmd MoltenEnterOutput<CR>",
+    { desc = "open output window", silent = true })
 
 -- automatically import output chunks from a jupyter notebook
 -- tries to find a kernel that matches the kernel in the jupyter notebook

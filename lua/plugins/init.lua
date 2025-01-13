@@ -16,6 +16,7 @@ return {
 
 
 
+    -- TODO: Сделать возможность создавание ячееееееек
     {
         "nvimtools/hydra.nvim",
         keys = { { '<Leader>oa' } },
@@ -129,8 +130,8 @@ return {
 
     {
         "mfussenegger/nvim-dap",
-        -- keys = { { "<F9>" }, { "<F5>" } },
-        ft = { 'python' },
+        keys = { { '<Leader>du' } },
+        -- ft = { 'python' },
         config = function()
             require "configs.dap"
         end,
@@ -149,7 +150,7 @@ return {
 
     {
         "ggandor/leap.nvim",
-        keys = { { 's' }, { 'S' } },
+        keys = { { 's' }, { 'S' }, { 'ы' }, { 'Ы' } },
         config = function()
             require "configs.leap"
         end,
@@ -182,6 +183,8 @@ return {
     --         'nvim-telescope/telescope.nvim',
     --     },
     -- },
+    -- TODO: Сделать short cat команды Noce Telescope
+
     {
         "folke/noice.nvim",
         lazy = false,
@@ -223,6 +226,8 @@ return {
 
     {
         'GCBallesteros/jupytext.nvim',
+        -- ft = { { 'ipynb' }, { 'python' } },
+        -- keys = { { '<Leader>oa' } },
         lazy = false,
         config = function()
             require("jupytext").setup({
@@ -235,9 +240,9 @@ return {
     --
     {
         "3rd/image.nvim",
-        -- ft = { { 'markdown' }, },
+        ft = { 'markdown' }, -- !!!
         -- lazy = false,
-        keys = { { '<Leader>oa' }, },
+        -- keys = { { '<Leader>oa' }, },
         config = function()
             require("image").setup({
                 backend = "ueberzug",
@@ -298,9 +303,9 @@ return {
         config = function()
             require "configs.molten"
         end,
-        dependencies = {
-            "3rd/image.nvim",
-        }
+        -- dependencies = {
+        --     "3rd/image.nvim",
+        -- }
     },
 
 
@@ -365,15 +370,25 @@ return {
         },
     },
 
+
     -- {
-    --     "benlubas/neoscroll.nvim", -- fork that adds the time_scale option to scroll faster
-    --     keys = {
-    --         { '<C-u>' }, { '<C-d>' }, { '<C-b>' }, { '<C-f>' },
-    --         { '<C-y>' }, { '<C-e>' },
-    --         { 'zt' }, { 'zz' }, { 'zb' },
+    --     "epwalsh/obsidian.nvim",
+    --     version = "*",
+    --     ft = "markdown",
+    --     dependencies = {
+    --         "nvim-lua/plenary.nvim",
     --     },
-    --     config = function()
-    --         require 'configs.neoscroll'
+    --     opts = {
+    --         workspaces = {
+    --             {
+    --                 name = "2brain",
+    --                 path = "~/../../media/sf_2brain/",
+    --             },
+    --         },
+    --     },
+    --     config = function(_, opts)
+    --         require("obsidian").setup(opts)
+    --         vim.opt.conceallevel = 2
     --     end,
-    -- },
+    -- }
 }
