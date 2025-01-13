@@ -15,7 +15,6 @@ return {
     },
 
 
-
     -- TODO: Сделать возможность создавание ячееееееек
     {
         "nvimtools/hydra.nvim",
@@ -54,6 +53,22 @@ return {
             { "<Leader>l",     "<Cmd>MultipleCursorsLock<CR>",             mode = { "n", "x" },      desc = "Lock virtual cursors" },
         },
     },
+
+    { "LunarVim/bigfile.nvim" },
+    lazy = false,
+    opts = {
+        filesize = 2, -- MiB (2 MiB is just over 2MB)
+        features = {
+            "indent_blankline",
+            "lsp",
+            "treesitter",
+            "syntax",
+            "vimopts",
+            "filetype",
+        },
+    },
+
+    { "kylechui/nvim-surround", event = 'VeryLazy' },
 
     {
 
@@ -139,9 +154,9 @@ return {
     {
         "rcarriga/nvim-dap-ui",
         dependencies = "mfussenegger/nvim-dap",
-        -- config = function()
-        --     require "configs.dapui"
-        -- end,
+        config = function()
+            require "configs.dapui"
+        end,
     },
 
     { "mfussenegger/nvim-dap-python",    dependencies = "mfussenegger/nvim-dap" },

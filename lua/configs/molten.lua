@@ -16,6 +16,10 @@ vim.g.molten_image_location = 'virt'
 vim.keymap.set("n", "<leader>os", ":noautocmd MoltenEnterOutput<CR> :noautocmd MoltenEnterOutput<CR>",
     { desc = "open output window", silent = true })
 
+
+vim.keymap.set("n", "<leader>mr", ":noautocmd MoltenRestart<CR> ",
+    { desc = "restart kernek", silent = true })
+
 -- automatically import output chunks from a jupyter notebook
 -- tries to find a kernel that matches the kernel in the jupyter notebook
 -- falls back to a kernel that matches the name of the active venv (if any)

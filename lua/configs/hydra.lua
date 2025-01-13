@@ -8,7 +8,6 @@ local hydra = require("hydra")
 hydra({
     name = "QuartoNavigator",
     hint = [[_j_/_k_: move down/up  _r_: run cell
-  _l_: run line  _R_: run above
          _<esc>_/_q_: exit]],
     config = {
         color = "pink",
@@ -23,9 +22,7 @@ hydra({
         { "j",     keys("]b") },
         { "k",     keys("[b") },
         { "r",     ":QuartoSend<CR>" },
-        { "l",     ":QuartoSendLine<CR>" },
-        { "R",     ":QuartoSendAbove<CR>" },
-        { "<esc>", nil,                   { exit = true } },
-        { "q",     nil,                   { exit = true } },
+        { "<esc>", nil,              { exit = true } },
+        { "q",     nil,              { exit = true } },
     },
 })
