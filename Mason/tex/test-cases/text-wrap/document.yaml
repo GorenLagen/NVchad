@@ -1,7 +1,0 @@
-modifyLineBreaks:
-    textWrapOptions:
-        blocksFollow:
-            other: |-
-              (?x)\\\]
-              |
-              \\begin\{document\}

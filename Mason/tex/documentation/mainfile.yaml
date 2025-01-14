@@ -1,6 +1,0 @@
-noAdditionalIndentGlobal:
-    mandatoryArguments: 0
-
-modifyLineBreaks:
-    textWrapOptions:
-        columns: 0

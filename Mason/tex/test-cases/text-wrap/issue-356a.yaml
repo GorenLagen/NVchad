@@ -1,5 +1,0 @@
-defaultIndent: "  "
-modifyLineBreaks:
-  textWrapOptions:
-    columns: 80
-    when: after

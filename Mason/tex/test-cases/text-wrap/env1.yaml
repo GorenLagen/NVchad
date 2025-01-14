@@ -1,8 +1,0 @@
-modifyLineBreaks:
-    textWrapOptions:
-        columns: 10
-        blocksFollow:
-           other: |-
-             (?x)\\begin\{[^}]*?\}
-        blocksBeginWith:
-           a-z: 1

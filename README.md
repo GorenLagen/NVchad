@@ -8,6 +8,8 @@
 4. Changed file structure
 5. Installed dap for python
 
+cool Wiki
+
 Cool img ↓
 
 ![meme](https://i.imgur.com/XsmrqbA.jpeg)

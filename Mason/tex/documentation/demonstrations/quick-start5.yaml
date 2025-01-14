@@ -1,5 +1,0 @@
-modifyLineBreaks:
-    textWrapOptions:
-        columns: 20
-        blocksFollow:
-           other: '\\begin\{myenv\}'

@@ -1,4 +1,0 @@
-modifyLineBreaks:
-    textWrapOptions:
-        blocksBeginWith:
-           0-9: 1

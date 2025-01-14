@@ -1,4 +1,0 @@
-modifyLineBreaks:
-  textWrapOptions:
-    comments: 
-      inheritLeadingSpace: 1

@@ -1,7 +1,0 @@
-lookForAlignDelims:
-   xeCJKsetup: 
-      delimiterRegEx: '(=)'
-
-indentRules:
-  xeCJKsetup:
-    body: '  '

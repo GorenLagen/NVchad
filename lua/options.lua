@@ -37,6 +37,7 @@ o.relativenumber = true
 
 vim.keymap.set('n', 'q:', '<Nop>')
 vim.keymap.set("v", "K", "<nop>", { noremap = true, silent = true })
+vim.keymap.set("n", "<leader>to", ":noautocmd TodoTelescope<CR> ")
 
 
 vim.g.lua_snippets_path = vim.fn.stdpath "config" .. "/snippets"
@@ -65,5 +66,3 @@ vim.api.nvim_set_keymap("n", "<F12>", ":lua require'dap'.step_out()<CR>", { nore
 vim.api.nvim_set_keymap("n", "<Leader>dq", ":lua require'dap'.terminate()<CR>", { noremap = true, silent = true })
 
 vim.api.nvim_set_keymap("n", "<Leader>du", ":lua require'dapui'.toggle()<CR>", { noremap = true, silent = true })
-
-vim.g.maplocalleader = ";" -- Устанавливает localleader как пробел

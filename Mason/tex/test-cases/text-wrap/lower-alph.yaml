@@ -1,6 +1,0 @@
-modifyLineBreaks:
-    textWrapOptions:
-        columns: 3
-        huge: wrap
-        blocksBeginWith:
-           a-z: 1

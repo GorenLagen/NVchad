@@ -1,4 +1,0 @@
-modifyLineBreaks:
-    textWrapOptions:
-        blocksEndBefore:
-           other: 0

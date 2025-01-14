@@ -1,4 +1,0 @@
-modifyLineBreaks:
-    textWrapOptions:
-        blocksFollow:
-           other: 0

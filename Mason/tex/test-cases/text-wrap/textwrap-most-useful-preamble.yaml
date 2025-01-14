@@ -1,8 +1,0 @@
-indentPreamble: 1
-
-modifyLineBreaks:
-    textWrapOptions:
-        columns: 60
-        blocksFollow:
-            other: |-
-              (?x)\\documentclass\{[^}]*?\}

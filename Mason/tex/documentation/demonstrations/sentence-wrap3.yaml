@@ -1,8 +1,0 @@
-defaultIndent: '   '
-modifyLineBreaks:
-    oneSentencePerLine:
-        manipulateSentences: 1     
-        textWrapSentences: 1
-    textWrapOptions:
-        columns: 35
-        when: after  # <!-------

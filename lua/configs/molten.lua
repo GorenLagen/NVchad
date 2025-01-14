@@ -1,7 +1,3 @@
--- TODO:
--- 1. Я гандончик и нужно всегда делать бекапы!!!
-
-
 vim.g.molten_wrap_output = true
 vim.g.molten_image_provider = "image.nvim"
 vim.g.molten_auto_open_output = false

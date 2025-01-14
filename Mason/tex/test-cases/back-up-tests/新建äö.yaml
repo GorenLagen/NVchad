@@ -1,8 +1,0 @@
-replacements:
-  -
-    this: 'X'
-    that: 'Y'
-  -
-    this: '一'
-    that: '二'
-

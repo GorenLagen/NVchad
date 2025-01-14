@@ -1,5 +1,0 @@
-modifyLineBreaks:
-    textWrapOptions:
-        columns: 91
-        blocksFollow:
-           other: '\textit\{'
