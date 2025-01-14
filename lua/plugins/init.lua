@@ -1,4 +1,7 @@
 return {
+
+    -- TODO: add SQL
+
     {
         "stevearc/conform.nvim",
         event = "BufWritePre",
@@ -147,6 +150,7 @@ return {
         end,
         keys = {
             { "<localleader>H", function() require("harpoon"):list():append() end, desc = "harpoon file", },
+
             {
                 "<localleader>h",
                 function()
@@ -155,6 +159,7 @@ return {
                 end,
                 desc = "harpoon quick menu",
             },
+
             -- { "<localleader>1", function() require("harpoon"):list():select(1) end, desc = "harpoon to file 1", },
             -- { "<localleader>2", function() require("harpoon"):list():select(2) end, desc = "harpoon to file 2", },
             -- { "<localleader>3", function() require("harpoon"):list():select(3) end, desc = "harpoon to file 3", },
@@ -180,15 +185,6 @@ return {
     --
     { "MunifTanjim/nui.nvim" },
     --
-    {
-        -- TODO: Русифицировать телескоп\команды для latex
-
-        "Wansmer/langmapper.nvim",
-        ft = { 'tex', 'markdown' },
-        config = function()
-            require "configs/langmapper"
-        end,
-    },
 
     {
         'GCBallesteros/jupytext.nvim',
@@ -314,9 +310,6 @@ return {
                 require('otter').activate({ 'python', 'lua' }, true, true)
                 print("Otter activated!")
 
-                -- vim.cmd(":MoltenInit")
-                -- print("Molten initialized!")
-
                 vim.cmd("MoltenImportOutput")
                 print('Molten output!')
             end, { noremap = true, silent = true, desc = "Activate Otter and Molten and import outputs" })
@@ -336,27 +329,12 @@ return {
         },
     },
 
-
-    -- TODO: настроить обисиан
-
-    -- {
-    --     "epwalsh/obsidian.nvim",
-    --     version = "*",
-    --     ft = "markdown",
-    --     dependencies = {
-    --         "nvim-lua/plenary.nvim",
-    --     },
-    --     opts = {
-    --         workspaces = {
-    --             {
-    --                 name = "2brain",
-    --                 path = "~/../../media/sf_2brain/",
-    --             },
-    --         },
-    --     },
-    --     config = function(_, opts)
-    --         require("obsidian").setup(opts)
-    --         vim.opt.conceallevel = 2
-    --     end,
-    -- }
+    {
+        "Wansmer/langmapper.nvim",
+        -- lazy = false,
+        ft = { 'tex', 'markdown' },
+        config = function()
+            require "configs/langmapper"
+        end,
+    },
 }

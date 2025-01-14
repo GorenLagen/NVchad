@@ -37,7 +37,6 @@ o.relativenumber = true
 
 vim.keymap.set('n', 'q:', '<Nop>')
 vim.keymap.set("v", "K", "<nop>", { noremap = true, silent = true })
-vim.keymap.set("n", "<leader>to", ":noautocmd TodoTelescope<CR> ")
 
 
 vim.g.lua_snippets_path = vim.fn.stdpath "config" .. "/snippets"
