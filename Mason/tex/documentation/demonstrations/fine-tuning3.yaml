@@ -1,0 +1,10 @@
+fineTuning:
+    trailingComments:
+      notPrecededBy: (?<!\\)
+      afterComment: (?!(?:\hend)).*?
+
+specialBeginEnd:
+  customSection:
+    begin: \\(?:section|chapter)
+    end: \%\h+end
+  specialBeforeCommand: 1

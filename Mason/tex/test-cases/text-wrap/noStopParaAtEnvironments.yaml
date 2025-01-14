@@ -1,0 +1,26 @@
+modifyLineBreaks:
+    textWrapOptions:
+        blocksFollow:
+           other: |-
+             (?x)\\item
+                 |
+                 \\ifnum
+                 |
+                 \\mycommand\{
+                 |
+                 \\\[
+                 |
+                 \\\]
+                 |
+                 \[
+        blocksEndBefore:
+           other: |-
+             (?x)\\\[
+                 |
+                    \\end\{
+                 |
+                    \\fi
+                 | 
+                    \}
+                 | 
+                    \]

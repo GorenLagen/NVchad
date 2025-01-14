@@ -1,0 +1,7 @@
+#
+# conda-necessary file
+#
+channels:
+- conda-forge
+dependencies:
+- latexindent.pl
