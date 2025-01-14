@@ -44,13 +44,8 @@ return {
 
             { "<C-LeftMouse>", "<Cmd>MultipleCursorsMouseAddDelete<CR>",   mode = { "n", "i" },      desc = "Add or remove cursor" },
 
-            { "<Leader>a",     "<Cmd>MultipleCursorsAddMatches<CR>",       mode = { "n", "x" },      desc = "Add cursors to cword" },
-            { "<Leader>A",     "<Cmd>MultipleCursorsAddMatchesV<CR>",      mode = { "n", "x" },      desc = "Add cursors to cword in previous area" },
-
             { "<Leader>d",     "<Cmd>MultipleCursorsAddJumpNextMatch<CR>", mode = { "n", "x" },      desc = "Add cursor and jump to next cword" },
             { "<Leader>D",     "<Cmd>MultipleCursorsJumpNextMatch<CR>",    mode = { "n", "x" },      desc = "Jump to next cword" },
-
-            { "<Leader>l",     "<Cmd>MultipleCursorsLock<CR>",             mode = { "n", "x" },      desc = "Lock virtual cursors" },
         },
     },
 
@@ -145,7 +140,7 @@ return {
 
     {
         "mfussenegger/nvim-dap",
-        keys = { { '<Leader>du' } },
+        keys = { { '<localleader>du' } },
         -- ft = { 'python' },
         config = function()
             require "configs.dap"
@@ -198,7 +193,6 @@ return {
     --         'nvim-telescope/telescope.nvim',
     --     },
     -- },
-    -- TODO: Сделать short cat команды Noce Telescope
 
     {
         "folke/noice.nvim",
@@ -210,6 +204,31 @@ return {
         config = function()
             require "configs.noice"
         end,
+    },
+
+    {
+        "theprimeagen/harpoon",
+        branch = "harpoon2",
+        dependencies = { "nvim-lua/plenary.nvim" },
+        config = function()
+            require("harpoon"):setup()
+        end,
+        keys = {
+            { "<localleader>H", function() require("harpoon"):list():append() end, desc = "harpoon file", },
+            {
+                "<localleader>h",
+                function()
+                    local harpoon = require("harpoon")
+                    harpoon.ui:toggle_quick_menu(harpoon:list())
+                end,
+                desc = "harpoon quick menu",
+            },
+            -- { "<localleader>1", function() require("harpoon"):list():select(1) end, desc = "harpoon to file 1", },
+            -- { "<localleader>2", function() require("harpoon"):list():select(2) end, desc = "harpoon to file 2", },
+            -- { "<localleader>3", function() require("harpoon"):list():select(3) end, desc = "harpoon to file 3", },
+            -- { "<localleader>4", function() require("harpoon"):list():select(4) end, desc = "harpoon to file 4", },
+            -- { "<localleader>5", function() require("harpoon"):list():select(5) end, desc = "harpoon to file 5", },
+        },
     },
     --
     --
