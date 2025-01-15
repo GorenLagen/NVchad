@@ -48,7 +48,7 @@ vim.g.lua_snippets_path = vim.fn.stdpath "config" .. "/snippets"
 
 -- --- PYTHON3 --- --
 
-vim.keymap.set('n', '<F4>', ":w <bar> exec '!python3 '.shellescape('%')<CR>")
+-- vim.keymap.set('n', '<F4>', ":w <bar> exec '!python3 '.shellescape('%')<CR>")
 
 -- --- DAP --- --
 
@@ -65,3 +65,8 @@ vim.api.nvim_set_keymap("n", "<F12>", ":lua require'dap'.step_out()<CR>", { nore
 vim.api.nvim_set_keymap("n", "<Leader>dq", ":lua require'dap'.terminate()<CR>", { noremap = true, silent = true })
 
 vim.api.nvim_set_keymap("n", "<Leader>du", ":lua require'dapui'.toggle()<CR>", { noremap = true, silent = true })
+
+vim.api.nvim_create_user_command('FullFocus', function()
+    vim.cmd('ZenMode')    -- Активируем ZenMode
+    vim.cmd('PencilSoft') -- Активируем Pencil
+end, {})

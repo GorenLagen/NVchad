@@ -355,7 +355,7 @@ return {
     {
         "kylechui/nvim-surround",
         version = "*", -- Use for stability; omit to use `main` branch for the latest features
-        event = "VeryLazy",
+        event = "BufRead",
         config = function()
             require("nvim-surround").setup({
                 -- Configuration here, or leave empty to use defaults
@@ -365,7 +365,6 @@ return {
 
     {
         "kdheepak/lazygit.nvim",
-        lazy = false,
         cmd = {
             "LazyGit",
             "LazyGitConfig",
@@ -382,5 +381,39 @@ return {
         keys = {
             { "<leader>lg", "<cmd>LazyGit<cr>", desc = "LazyGit" }
         }
-    }
+    },
+
+    {
+        "HakonHarnes/img-clip.nvim",
+        ft = { "markdown", 'tex' },
+        opts = {
+            -- add options here
+            -- or leave it empty to use the default settings
+        },
+        keys = {
+            -- suggested keymap
+            { "<leader>p", "<cmd>PasteImage<cr>", desc = "Paste image from system clipboard" },
+        },
+    },
+
+    {
+        "folke/twilight.nvim",
+    },
+
+    {
+        "folke/zen-mode.nvim",
+        cmd = "ZenMode",
+        config = function()
+            vim.cmd('ZenMode')
+            vim.cmd('ZenMode')
+        end,
+    },
+
+    {
+        "reedes/vim-pencil",
+        cmd = "PencilSoft",
+        config = function()
+            vim.cmd('PencilSoft') -- Включаем режим Pencil вручную
+        end,
+    },
 }
