@@ -24,8 +24,8 @@ vim.api.nvim_create_autocmd("InsertLeave", {
 local ls = require("luasnip")
 
 -- vim.keymap.set({"i"}, "<C-K>", function() ls.expand() end, {silent = true})
-vim.keymap.set({ "i", "s" }, "<TAB>", function() ls.jump(1) end, { silent = true })
-vim.keymap.set({ "i", "s" }, "<S-TAB>", function() ls.jump(-1) end, { silent = true })
+vim.keymap.set({ "i", "s" }, "<A-l>", function() ls.jump(1) end, { silent = true })
+vim.keymap.set({ "i", "s" }, "<A-j>", function() ls.jump(-1) end, { silent = true })
 
 vim.keymap.set({ "i", "s" }, "<C-E>", function()
     if ls.choice_active() then

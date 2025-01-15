@@ -86,3 +86,8 @@ vim.api.nvim_set_keymap('n', 'жр',
     '<Cmd>lua require("harpoon").ui:toggle_quick_menu(require("harpoon"):list())<CR>', { noremap = true, silent = true })
 
 vim.keymap.set("n", "<leader>ещ", ":noautocmd TodoTelescope<CR> ")
+
+local ls = require("luasnip")
+
+vim.keymap.set({ "i", "s" }, "<A-д>", function() ls.jump(1) end, { silent = true })
+vim.keymap.set({ "i", "s" }, "<A-о>", function() ls.jump(-1) end, { silent = true })

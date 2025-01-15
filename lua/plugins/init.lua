@@ -17,6 +17,8 @@ return {
 
 
     -- TODO: Сделать возможность создавание ячееееееек
+    -- Сделать подержку для отображения в коммандной линии <- че?
+
     {
         "nvimtools/hydra.nvim",
         keys = { { '<Leader>oa' } },
@@ -64,7 +66,13 @@ return {
         },
     },
 
-    { "kylechui/nvim-surround", event = 'VeryLazy' },
+    -- {
+    --     'echasnovski/mini.nvim',
+    --     event = "BufRead",
+    --     config = function()
+    --         require 'configs.mini'
+    --     end
+    -- },
 
     {
         "folke/todo-comments.nvim",
@@ -246,6 +254,9 @@ return {
         end,
     },
     {
+
+        -- TODO: сделать сниппеты -> выделение -> прописывание комманды textbf -> текст находиться в textbf
+
         "lervag/vimtex",
         ft = { "tex", "latex" }, -- we don't want to lazy load VimTeX
         -- tag = "v2.15", -- uncomment to pin to a specific release
@@ -329,6 +340,8 @@ return {
         },
     },
 
+    -- TODO: сделать поддержу передвижения в telescope
+
     {
         "Wansmer/langmapper.nvim",
         -- lazy = false,
@@ -337,4 +350,37 @@ return {
             require "configs/langmapper"
         end,
     },
+
+
+    {
+        "kylechui/nvim-surround",
+        version = "*", -- Use for stability; omit to use `main` branch for the latest features
+        event = "VeryLazy",
+        config = function()
+            require("nvim-surround").setup({
+                -- Configuration here, or leave empty to use defaults
+            })
+        end
+    },
+
+    {
+        "kdheepak/lazygit.nvim",
+        lazy = false,
+        cmd = {
+            "LazyGit",
+            "LazyGitConfig",
+            "LazyGitCurrentFile",
+            "LazyGitFilter",
+            "LazyGitFilterCurrentFile",
+        },
+        -- optional for floating window border decoration
+        dependencies = {
+            "nvim-lua/plenary.nvim",
+        },
+        -- setting the keybinding for LazyGit with 'keys' is recommended in
+        -- order to load the plugin when the command is run for the first time
+        keys = {
+            { "<leader>lg", "<cmd>LazyGit<cr>", desc = "LazyGit" }
+        }
+    }
 }
